@@ -1,5 +1,6 @@
 package Equfax;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,19 +15,39 @@ public class Amazon {
 
         driver.get("https://www.amazon.com/");
 
-        driver.findElement(By.id("twotabsearchtextbox")).sendKeys("qa testing for beginners");
-        driver.findElement(By.id("nav-search-submit-button")).click();
-        driver.findElement(By.xpath("//*[@data-index='1']")).click();
+       driver.findElement(By.id("twotabsearchtextbox")).sendKeys("qa testing for beginners");
+       driver.findElement(By.id("nav-search-submit-button")).click();
+        //driver.findElement(By.xpath("//*[@data-index='1']")).click();
+
+        WebElement firstBook= driver.findElement(By.xpath("(//img[@data-image-latency ='s-product-image'])[1]"));
+        firstBook.click();
 
 
-        //driver.findElement(By.xpath("(//span[text()='Unit Testing Principles, Practices, and Patterns: Effective testing styles, patterns, and reliable automation for unit testing, mocking, and integration testing with examples in C#'])[1]")).click();
+       // driver.findElement(By.xpath("(//span[text()='Unit Testing Principles, Practices, and Patterns: Effective testing styles, patterns, and reliable automation for unit testing, mocking, and integration testing with examples in C#'])[1]")).click();
         WebElement priceTag = driver.findElement(By.xpath("(//span[text() = '$47.49'])[1]"));
         System.out.println(priceTag.getText());
         String actualResult=priceTag.getText();
         Assert.assertEquals(actualResult,"$47.49");
-        //String titleName= driver.findElement(By.xpath("//span[text()='Unit Testing Principles, Practices, and Patterns: Effective testing styles, patt…']")).getText();
-        //System.out.println("the price of " + titleName + actualResult);
-        driver.findElement(By.xpath("(//input[@name='submit.addToCart'])[1]")).click();
+       //String titleName= driver.findElement(By.xpath("//span[text()='Unit Testing Principles, Practices, and Patterns: Effective testing styles, patt…']")).getText();
+      //  System.out.println("the price of " + titleName + actualResult);
+        Assert.assertEquals(actualResult,"$47.49");
+        System.out.println(priceTag.getText());
+        driver.findElement(By.xpath("//input[@id='add-to-cart-button']")).click();
+        //System.out.println(driver.findElement(By.xpath("//input[@id='add-to-cart-button']")).isSelected());
+        Assert.assertEquals(actualResult,"$47.49");
+
+        WebElement priceTag3 =driver.findElement(By.xpath("(//span[text() = '$47.49'])[1]"));
+        System.out.println(priceTag3.getText());
+        String actualResults=priceTag3.getText();
+        Assert.assertEquals(actualResults,"$47.49");
+
+        driver.findElement(By.xpath("//span[@id='hlb-ptc-btn']")).click();
+
+
+        WebElement checkoutPrice= driver.findElement(By.xpath("(//td[@class='a-text-right aok-nowrap a-nowrap'])[3]"));
+        System.out.println(checkoutPrice.getText());
+        String finalResult= checkoutPrice.getText();
+        Assert.assertEquals(checkoutPrice,"$47.49");
 
 
 
@@ -39,7 +60,8 @@ public class Amazon {
 
 
 
-        
+
+
 
     }
 }
